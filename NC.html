@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nail Tech Calculator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .cardStyle1 {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        display: flex;
+        padding-bottom: 20px;
+      }
+      .card {
+        width: 100% !important;
+        height: 400px;
+      }
+      .cardSmall {
+        width: 100% !important;
+        height: 200px !important;
+      }
+      .card-title {
+        font-size: 60px;
+        padding-top: 40%;
+      }
+      .card-titleSmall {
+        padding-top: 20%;
+      }
+      .titleStyle {
+        text-align: center;
+        padding-bottom: 80px;
+        padding-top: 25px;
+        font-size: 70px !important;
+      }
+      .buttonStyle {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        display: flex;
+        padding-bottom: 20px;
+        padding-top: 90px;
+      }
+      .showSection {
+        animation-name: fadeIn;
+        animation-duration: 2s;
+      }
+      .hideSection {
+        display: none;
+      }
+      .row {
+        margin: 0px !important;
+      }
+      .topBannerStyle {
+        font-size: 50px;
+      }
+      .btnNav {
+        height: 50px;
+        border-radius: 50px;
+      }
+      .navStyle {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .activeNav {
+        animation-name: widthIn;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+      .btn {
+        background-color: #f1cbff;
+      }
+      .btn:hover {
+        background-color: #f1cbff;
+        border-color: #f1cbff;
+      }
+      .btn-check:checked + .btn,
+      .btn.active,
+      .btn.show,
+      .btn:first-child:active,
+      :not(.btn-check) + .btn:active {
+        background-color: #f1cbff;
+        border-color: #f1cbff;
+      }
+      .inactiveNav {
+        animation-name: widthOut;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+      .sectionStyle {
+        height: 1560px;
+      }
+      .accessoriesBtnStyle {
+        width: 100px;
+        height: 100px;
+        font-size: 60px;
+      }
+      .accessoriesInputStyle {
+        width: 100px;
+        height: 100px;
+        margin-left: 5px;
+        margin-right: 5px;
+        text-align: center;
+        font-size: 60px;
+      }
+      .cardSelected {
+        border: 10px solid #ffbdbd;
+      }
+      .modal-dialog {
+        max-width: 90% !important;
+      }
+      .modal-header,
+      .modal-footer {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .modal-title {
+        font-size: 80px;
+      }
+      .modal-footer > button {
+        width: 400px;
+        height: 100px;
+        font-size: 60px;
+      }
+      .disabledCards {
+        animation-name: colorChange;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+      }
+      .enabledCards {
+        animation-name: colorChangeBack;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+      }
+      .totalStyle {
+        text-align: center;
+        font-size: 100px;
+        color: #ffbdbd;
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes moveRight {
+        from {
+          right: 0px;
+          opacity: 1;
+        }
+        to {
+          right: 600px;
+          opacity: 0;
+        }
+      }
+      @keyframes widthIn {
+        from {
+          width: 50px;
+          background-color: grey;
+        }
+        to {
+          width: 100px;
+          background-color: #f1cbff;
+        }
+      }
+      @keyframes widthOut {
+        from {
+          width: 100px;
+          background-color: #f1cbff;
+        }
+        to {
+          width: 50px;
+          background-color: grey;
+        }
+      }
+      @keyframes colorChange {
+        from {
+          background-color: white;
+          opacity: 1;
+        }
+        to {
+          background-color: grey;
+          opacity: 0.5;
+        }
+      }
+      @keyframes colorChangeBack {
+        from {
+          background-color: grey;
+          opacity: 0.5;
+        }
+        to {
+          background-color: white;
+          opacity: 1;
+        }
+      }
+      .moveOut {
+        animation-name: moveRight;
+        animation-duration: 1s;
+        position: relative;
+      }
+    </style>
+    <script>
+      //PRICES SETUP
+      let totalPrice = 0;
+      let nailLength = 0;
+      let nailShape = "";
+      let nailShapePrice = 0;
+      let tech = [];
+      let techPrice = [];
+      let acc = [];
+      let accPrice = [];
+      let diff = "";
+      let stones = 0;
+      let stonesPrice = 0;
+      let charms = 0;
+      let charmsPrice = 0;
+      let stickers = 0;
+      let stickersPrice = 0;
+      let other = 0;
+      let otherPrice = 0;
+      let accesories = 0;
+      let tempTechWaitingOnDifficulty = "";
+      //Prices
+      function calculatePrices() {
+        //length
+
+        if (nailLength === "") {
+          totalPrice = 0;
+        } else {
+          totalPrice = parseInt(nailLength);
+        }
+
+        //Shape
+        switch (nailShape) {
+          case "round":
+            totalPrice += 1.0;
+            nailShapePrice = 1;
+            break;
+          case "square":
+            totalPrice += 2.0;
+            nailShapePrice = 2;
+            break;
+          case "almond":
+            totalPrice += 3.0;
+            nailShapePrice = 3;
+            break;
+          case "ballerina":
+            totalPrice += 4.0;
+            nailShapePrice = 4;
+            break;
+          case "stiletto":
+            totalPrice += 5.0;
+            nailShapePrice = 5;
+            break;
+          case "other":
+            totalPrice += 6.0;
+            nailShapePrice = 6;
+            break;
+          default:
+            break;
+        }
+        //technique
+        let techPriceTotal = 0;
+        for (x = 0; x < techPrice.length; x++) {
+          totalPrice += techPrice[x];
+          techPriceTotal += techPrice[x];
+        }
+        // Accessories
+        for (x = 0; x < accPrice.length; x++) {
+          totalPrice += accPrice[x];
+        }
+
+        let totalPlaceholder = document.getElementById("totalPlaceholder");
+        totalPlaceholder.innerText = "Total: $" + totalPrice;
+
+        let ammountPlaceholder = document.getElementById("ammountPlaceholder");
+        ammountPlaceholder.innerHTML =
+          "<h1 class='totalStyle'>$ " + totalPrice + ".00</h1>";
+        let table = "<div class='row'>";
+
+        if (nailLength > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+          table += "<h2>Length</h2>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table += "<h2>$" + nailLength + ".00</h2>";
+          table += "</div>";
+          table += "</div>";
+        }
+
+        if (nailShapePrice > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>Shape</h2></div></div>";
+          table +=
+            "<div class='row'><div class='col-12'><ul><li><h2>" +
+            nailShape.toUpperCase() +
+            "</h2></li></ul></div></div>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
+          table +=
+            "<div class='row'><div class='col-12' style='padding:0px'><ul style='list-style-type: none;padding: 0px;'><li><h2>$" +
+            nailShapePrice +
+            ".00</h2></li></ul></div></div>";
+          table += "</div>";
+          table += "</div>";
+        }
+
+        if (techPrice.length > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>Technique</h2></div></div>";
+          table += "<div class='row'><div class='col-12'><ul>";
+          for (x = 0; x < tech.length; x++) {
+            table += "<li><h2>" + tech[x].toUpperCase() + "</h2></li>";
+          }
+          table += "</ul></div></div>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
+          table +=
+            "<div class='row'><div class='col-12' style='padding:0px'><ul style='list-style-type: none;padding: 0px;'>";
+          for (x = 0; x < techPrice.length; x++) {
+            table += "<li><h2>$" + techPrice[x] + ".00</h2></li>";
+          }
+          table += "</ul></div></div>";
+          table += "</div>";
+          table += "</div>";
+        }
+        if (accPrice.length > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>Accessories</h2></div></div>";
+          table += "<div class='row'><div class='col-12'><ul>";
+          for (x = 0; x < acc.length; x++) {
+            table += "<li><h2>" + acc[x].toUpperCase() + "</h2></li>";
+          }
+          table += "</ul></div></div>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table +=
+            "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
+          table +=
+            "<div class='row'><div class='col-12' style='padding:0px'><ul style='list-style-type: none;padding: 0px;'>";
+          for (x = 0; x < accPrice.length; x++) {
+            table += "<li><h2>$" + accPrice[x] + ".00</h2></li>";
+          }
+          table += "</ul></div></div>";
+          table += "</div>";
+          table += "</div>";
+        }
+
+        table += "</div>";
+        let totalTable = document.getElementById("totalTable");
+        totalTable.innerHTML = table;
+      }
+
+      function getNailLength(l) {
+        let arr = ["35", "40", "45", "50", "55", "60"];
+        nailLength = l.id;
+        selectCard(l);
+        let arrSel = [l.id];
+        deselectCard(arrSel, arr);
+        calculatePrices();
+        let moveOut = document.getElementById("nailLength");
+        moveOut.classList.add("moveOut");
+        setTimeout(function () {
+          nextSection("nailShape");
+          nextStageBtn("nailShapeBtn");
+          moveOut.classList.remove("moveOut");
+        }, 500);
+      }
+      function getNailShape(s) {
+        let arr = [
+          "round",
+          "square",
+          "almond",
+          "ballerina",
+          "stiletto",
+          "other",
+        ];
+        nailShape = s.id;
+        selectCard(s);
+        let arrSel = [s.id];
+        deselectCard(arrSel, arr);
+        calculatePrices();
+        let moveOut = document.getElementById("nailShape");
+        moveOut.classList.add("moveOut");
+        setTimeout(function () {
+          nextSection("technique");
+          nextStageBtn("techniqueBtn");
+          moveOut.classList.remove("moveOut");
+        }, 500);
+      }
+      function disableTechCards(status) {
+        let arr = [
+          "encapsulated",
+          "handpainted",
+          "3d",
+          "chrome",
+          "french",
+          "sugar",
+          "stones",
+          "charms",
+          "stickers",
+          "otherAcc",
+        ];
+
+        if (status === true) {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.add("disabledCards");
+            div.classList.remove("enabledCards");
+          }
+        } else {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.remove("disabledCards");
+            div.classList.add("enabledCards");
+          }
+        }
+      }
+      function disableAccCards(status) {
+        let arr = ["stones", "charms", "stickers", "otherAcc"];
+
+        if (status === true) {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.add("disabledCards");
+            div.classList.remove("enabledCards");
+          }
+        } else {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.remove("disabledCards");
+            div.classList.add("enabledCards");
+          }
+        }
+      }
+      function getTechnique(t) {
+        if (tempTechWaitingOnDifficulty === "") {
+          if (tech.includes(t.id)) {
+            let index = 0;
+            index = tech.indexOf(t.id);
+            tech = tech.filter(function (item) {
+              return item !== t.id;
+            });
+            techPrice = techPrice.slice(index + 1);
+            let arr = [
+              "encapsulated",
+              "handpainted",
+              "3d",
+              "chrome",
+              "french",
+              "sugar",
+            ];
+            deselectCard(tech, arr);
+            calculatePrices();
+            if (tech.length > 0) {
+              let showBtn = document.getElementById("nextButtonTech");
+              showBtn.classList.add("showSection");
+              showBtn.classList.remove("hideSection");
+            } else {
+              let showBtn = document.getElementById("nextButtonTech");
+              showBtn.classList.remove("showSection");
+              showBtn.classList.add("hideSection");
+            }
+          } else {
+            tempTechWaitingOnDifficulty = t.id;
+            let showDiff = document.getElementById("difficulty");
+            showDiff.classList.add("showSection");
+            showDiff.classList.remove("hideSection");
+            selectCard(t);
+            disableTechCards(true);
+            let showBtn = document.getElementById("nextButtonTech");
+            showBtn.classList.remove("showSection");
+            showBtn.classList.add("hideSection");
+            let showNav = document.getElementById("navSection");
+            showNav.classList.remove("showSection");
+            showNav.classList.add("hideSection");
+          }
+        }
+      }
+      function getAccesories(t) {
+        if (tempTechWaitingOnDifficulty === "") {
+          if (acc.includes(t.id)) {
+            let index = 0;
+            index = acc.indexOf(t.id);
+            acc = acc.filter(function (item) {
+              return item !== t.id;
+            });
+            accPrice = accPrice.slice(index + 1);
+            let arr = ["stones", "charms", "stickers", "otherAcc"];
+            deselectCard(acc, arr);
+            calculatePrices();
+            let showNav = document.getElementById("navSection");
+            showNav.classList.add("showSection");
+            showNav.classList.remove("hideSection");
+          } else {
+            tempTechWaitingOnDifficulty = t.id;
+            let showDiff = document.getElementById("difficultyAccessories");
+            showDiff.classList.add("showSection");
+            showDiff.classList.remove("hideSection");
+            selectCard(t);
+            disableAccCards(true);
+            let showNav = document.getElementById("navSection");
+            showNav.classList.remove("showSection");
+            showNav.classList.add("hideSection");
+            let section = document.getElementsByClassName("buttonSection");
+            section[0].classList.add("hideSection");
+            section[0].classList.remove("showSection");
+          }
+        }
+      }
+      function getDifficulty(d, s) {
+        let arr = [];
+        if (s == "technique") {
+          arr = ["easy", "medium", "hard"];
+        } else {
+          arr = ["easyAcc", "mediumAcc", "hardAcc"];
+        }
+
+        selectCard(d);
+        let arrSel = [d.id];
+        deselectCard(arrSel, arr);
+        //technique
+        let price = 0;
+        switch (tempTechWaitingOnDifficulty) {
+          case "encapsulated":
+            price = 1.0;
+            break;
+          case "handpainted":
+            price = 2.0;
+            break;
+          case "3d":
+            price = 3.0;
+            break;
+          case "chrome":
+            price = 4.0;
+            break;
+          case "french":
+            price = 5.0;
+            break;
+          case "sugar":
+            price = 6.0;
+            break;
+          case "stones":
+            price = 7;
+            break;
+          case "charms":
+            price = 8;
+            break;
+          case "stickers":
+            price = 9;
+            break;
+          case "otherAcc":
+            price = 10;
+            break;
+          default:
+            break;
+        }
+
+        //dificulty
+        switch (d.id) {
+          case "easy":
+            price = price * 1;
+            break;
+          case "medium":
+            price = price * 2;
+            break;
+          case "hard":
+            price = price * 3;
+            break;
+
+          default:
+            break;
+        }
+        if (s == "technique") {
+          tech.push(tempTechWaitingOnDifficulty);
+          techPrice.push(price);
+        } else {
+          acc.push(tempTechWaitingOnDifficulty);
+          accPrice.push(price);
+        }
+
+        calculatePrices();
+        let showDiff = null;
+        if (s == "technique") {
+          showDiff = document.getElementById("difficulty");
+        } else {
+          showDiff = document.getElementById("difficultyAccessories");
+        }
+        showDiff.classList.add("hideSection");
+        showDiff.classList.remove("showSection");
+
+        tempTechWaitingOnDifficulty = "";
+        disableTechCards(false);
+        deselectAllDifficulties();
+
+        if (tech.length > 0 && s == "technique") {
+          let showBtn = document.getElementById("nextButtonTech");
+          showBtn.classList.add("showSection");
+          showBtn.classList.remove("hideSection");
+        } else {
+          let showBtn = document.getElementById("nextButtonTech");
+          showBtn.classList.remove("showSection");
+          showBtn.classList.add("hideSection");
+        }
+        let showNav = document.getElementById("navSection");
+        showNav.classList.add("showSection");
+        showNav.classList.remove("hideSection");
+        if (s == "acc") {
+          let section = document.getElementsByClassName("buttonSection");
+          section[0].classList.add("showSection");
+          section[0].classList.remove("hideSection");
+        }
+      }
+
+      function nextSection(next) {
+        let section = document.getElementsByClassName("showSection");
+        section[0].classList.add("hideSection");
+        section[0].classList.remove("showSection");
+
+        let nextSection = document.getElementById(next);
+        nextSection.classList.add("showSection");
+        nextSection.classList.remove("hideSection");
+
+        if (next == "accessories") {
+          let section = document.getElementsByClassName("buttonSection");
+          section[0].classList.remove("hideSection");
+          section[0].classList.add("showSection");
+        } else {
+          let section = document.getElementsByClassName("buttonSection");
+          section[0].classList.add("hideSection");
+          section[0].classList.remove("showSection");
+        }
+
+        if (next !== "technique") {
+          let section = document.getElementById("nextButtonTech");
+          section.classList.add("hideSection");
+          section.classList.remove("showSection");
+        } else {
+          if (tech.length > 0) {
+            let section = document.getElementById("nextButtonTech");
+            section.classList.remove("hideSection");
+            section.classList.add("showSection");
+          }
+        }
+      }
+
+      function nextStageBtn(next) {
+        let prevBtn = document.getElementsByClassName("activeNav");
+        prevBtn[0].classList.add("inactiveNav");
+        prevBtn[0].classList.remove("activeNav");
+
+        let nextBtn = document.getElementById(next);
+        nextBtn.classList.add("activeNav");
+        nextBtn.classList.remove("inactiveNav");
+      }
+
+      function btnNavigationClick(btn) {
+        switch (btn.id) {
+          case "nailLengthBtn":
+            nextSection("nailLength");
+            nextStageBtn("nailLengthBtn");
+            break;
+          case "nailShapeBtn":
+            nextSection("nailShape");
+            nextStageBtn("nailShapeBtn");
+            break;
+          case "techniqueBtn":
+            nextSection("technique");
+            nextStageBtn("techniqueBtn");
+            break;
+          case "accessoriesBtn":
+            nextSection("accessories");
+            nextStageBtn("accessoriesBtn");
+            break;
+          default:
+            break;
+        }
+      }
+
+      function selectCard(c) {
+        let cardselected = document.getElementById(c.id);
+        cardselected.classList.add("cardSelected");
+      }
+
+      function deselectCard(c, arr) {
+        for (x = 0; x < arr.length; x++) {
+          if (!c.includes(arr[x])) {
+            let cardselected = document.getElementById(arr[x]);
+            cardselected.classList.remove("cardSelected");
+          }
+        }
+      }
+      function deselectAllDifficulties() {
+        let arr = ["easy", "medium", "hard", "easyAcc", "mediumAcc", "hardAcc"];
+        for (x = 0; x < arr.length; x++) {
+          let cardselected = document.getElementById(arr[x]);
+          cardselected.classList.remove("cardSelected");
+        }
+      }
+
+      function add(a) {
+        let input = document.getElementById(a);
+        let inputVal = input.value;
+        inputVal++;
+        input.value = inputVal;
+
+        switch (a) {
+          case "stonesInput":
+            stones++;
+            break;
+          case "charmsInput":
+            charms++;
+            break;
+          case "stickersInput":
+            stickers++;
+            break;
+          case "otherInput":
+            other++;
+            break;
+
+          default:
+            break;
+        }
+        calculatePrices();
+      }
+      function substract(a) {
+        let input = document.getElementById(a);
+        let inputVal = input.value;
+        if (inputVal > 0) {
+          inputVal--;
+          input.value = inputVal;
+          switch (a) {
+            case "stonesInput":
+              stones--;
+              break;
+            case "charmsInput":
+              charms--;
+              break;
+            case "stickersInput":
+              stickers--;
+              break;
+            case "otherInput":
+              other--;
+              break;
+
+            default:
+              break;
+          }
+        }
+        calculatePrices();
+      }
+      function goNextTech() {
+        let moveOut = document.getElementById("technique");
+        moveOut.classList.add("moveOut");
+        setTimeout(function () {
+          nextSection("accessories");
+          nextStageBtn("accessoriesBtn");
+        }, 500);
+
+        let showBtn = document.getElementById("nextButtonTech");
+        showBtn.classList.remove("showSection");
+        showBtn.classList.add("hideSection");
+      }
+      function generateInvoice() {}
+    </script>
+  </head>
+  <body style="background-color: rgb(233, 231, 231)">
+    <div class="container-fluid" style="padding-top: 20px">
+      <!--Title-->
+      <div
+        class="row"
+        style="
+          padding-top: 20px;
+          padding-bottom: 20px;
+          background-color: #f1cbff;
+        "
+      >
+        <div class="col-6">
+          <h1 class="topBannerStyle">Cherry Nails</h1>
+        </div>
+        <div class="col-6" style="text-align: end">
+          <h1 id="totalPlaceholder" class="topBannerStyle">Total: $</h1>
+        </div>
+        <hr />
+      </div>
+      <!--End title-->
+      <!--Main Content-->
+      <div class="row">
+        <!--Nail length Content-->
+        <div id="nailLength" class="row showSection sectionStyle">
+          <!-- Title-->
+          <div class="row">
+            <div class="col-12">
+              <h2 class="titleStyle">Nail Length</h2>
+            </div>
+          </div>
+          <!--End Title-->
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="35"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">35</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="40"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">40</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="45"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">45</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 cardStyle1">
+              <div
+                id="50"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">50</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="55"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">55</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="60"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailLength(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">60</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!--End Nail length Content-->
+        <!--Nail Shape Content-->
+        <div id="nailShape" class="row hideSection sectionStyle">
+          <!--Title-->
+          <div class="row">
+            <div class="col-12">
+              <h3 class="titleStyle">Nail Shape</h3>
+            </div>
+          </div>
+          <!--End Title-->
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="round"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Round</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="square"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Square</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="almond"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Almond</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="ballerina"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Ballerina</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 cardStyle1">
+              <div
+                id="stiletto"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Stiletto</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="other"
+                class="card"
+                style="width: 9rem"
+                onclick="getNailShape(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Other</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!--End Nail Shape Content-->
+        <!--Nail Technique Content-->
+        <div id="technique" class="row hideSection sectionStyle">
+          <!--Title-->
+          <div class="row">
+            <div class="col-12">
+              <h3 class="titleStyle">Technique</h3>
+            </div>
+          </div>
+          <!--End Title-->
+          <div class="row">
+            <div class="col-4 cardStyle1">
+              <div
+                id="encapsulated"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5
+                    style="font-size: 36px; padding-top: 60%"
+                    class="card-title"
+                  >
+                    Encapsulated
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 cardStyle1">
+              <div
+                id="handpainted"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Hand Painted</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 cardStyle1">
+              <div
+                id="3d"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 style="padding-top: 60%" class="card-title">3D</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 cardStyle1">
+              <div
+                id="chrome"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 style="padding-top: 60%" class="card-title">Chrome</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 cardStyle1">
+              <div
+                id="french"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 style="padding-top: 60%" class="card-title">French</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 cardStyle1">
+              <div
+                id="sugar"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Sugar Effect</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="difficulty" class="row hideSection">
+            <div class="row">
+              <dic class="col-12">
+                <h3 class="titleStyle">Difficulty</h3>
+              </dic>
+            </div>
+            <div class="row">
+              <div class="col-4 cardStyle1">
+                <div
+                  id="easy"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this,'technique')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Easy</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 cardStyle1">
+                <div
+                  id="medium"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this, 'technique')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Med</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 cardStyle1">
+                <div
+                  id="hard"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this, 'technique')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Hard</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!--End Nail Technique Content-->
+        <div id="accessories" class="row hideSection sectionStyle">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="titleStyle">Accessories</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12 cardStyle1">
+                  <div
+                    id="stones"
+                    class="card"
+                    style="width: 9rem"
+                    onclick="getAccesories(this)"
+                  >
+                    <!--img src="..." class="card-img-top" alt="..." /-->
+                    <div class="card-body">
+                      <h5 class="card-title">Stones</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12 cardStyle1">
+                  <div
+                    id="charms"
+                    class="card"
+                    style="width: 9rem"
+                    onclick="getAccesories(this)"
+                  >
+                    <!--img src="..." class="card-img-top" alt="..." /-->
+                    <div class="card-body">
+                      <h5 class="card-title">Charms</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6" style="margin-top: 50px">
+              <div class="row">
+                <div class="col-12 cardStyle1">
+                  <div
+                    id="stickers"
+                    class="card"
+                    style="width: 9rem"
+                    onclick="getAccesories(this)"
+                  >
+                    <!--img src="..." class="card-img-top" alt="..." /-->
+                    <div class="card-body">
+                      <h5 class="card-title">Stickers</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6" style="margin-top: 50px">
+              <div class="row">
+                <div class="col-12 cardStyle1">
+                  <div
+                    id="otherAcc"
+                    class="card"
+                    style="width: 9rem"
+                    onclick="getAccesories(this)"
+                  >
+                    <!--img src="..." class="card-img-top" alt="..." /-->
+                    <div class="card-body">
+                      <h5 class="card-title">Other</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="difficultyAccessories" class="row hideSection">
+            <div class="row">
+              <dic class="col-12">
+                <h3 class="titleStyle">Difficulty</h3>
+              </dic>
+            </div>
+            <div class="row">
+              <div class="col-4 cardStyle1">
+                <div
+                  id="easyAcc"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this,'acc')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Easy</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 cardStyle1">
+                <div
+                  id="mediumAcc"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this, 'acc')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Med</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 cardStyle1">
+                <div
+                  id="hardAcc"
+                  class="card cardSmall"
+                  style="width: 9rem"
+                  onclick="getDifficulty(this, 'acc')"
+                >
+                  <!--img src="..." class="card-img-top" alt="..." /-->
+                  <div class="card-body">
+                    <h5 class="card-title card-titleSmall">Hard</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <!--End Main Content-->
+      <div
+        id="navSection"
+        class="row"
+        style="padding-left: 25%; padding-right: 20%; padding-top: 40px"
+      >
+        <div class="col-3 navStyle">
+          <button
+            id="nailLengthBtn"
+            class="btn btn-primary btnNav activeNav"
+            type="button"
+            onClick="btnNavigationClick(this)"
+            ;
+          ></button>
+        </div>
+        <div class="col-3 navStyle">
+          <button
+            id="nailShapeBtn"
+            class="btn btn-primary btnNav inactiveNav"
+            type="button"
+            onClick="btnNavigationClick(this)"
+          ></button>
+        </div>
+        <div class="col-3 navStyle">
+          <button
+            id="techniqueBtn"
+            class="btn btn-primary btnNav inactiveNav"
+            type="button"
+            onClick="btnNavigationClick(this)"
+          ></button>
+        </div>
+        <div class="col-3 navStyle">
+          <button
+            id="accessoriesBtn"
+            class="btn btn-primary btnNav inactiveNav"
+            type="button"
+            onClick="btnNavigationClick(this)"
+          ></button>
+        </div>
+      </div>
+      <!--Button-->
+      <div class="row buttonSection hideSection">
+        <div class="col-12 buttonStyle">
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#genModal"
+            style="width: 400px; height: 200px; font-size: 60px"
+            class="btn btn-primary"
+            type="button"
+          >
+            Calculate
+          </button>
+        </div>
+      </div>
+      <div id="nextButtonTech" class="row hideSection">
+        <div class="col-12 buttonStyle">
+          <button
+            onclick="goNextTech()"
+            style="width: 400px; height: 200px; font-size: 60px"
+            class="btn btn-primary"
+            type="button"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <!--End Button-->
+      <!--Modal-->
+      <div
+        class="modal fade"
+        id="genModal"
+        tabindex="-1"
+        aria-labelledby="genModallLabel"
+        aria-hidden="true"
+        style="margin-top: 200px"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #f1cbff">
+              <h1 class="modal-title" id="genModalLabel">Total</h1>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-12">
+                  <div id="ammountPlaceholder"></div>
+                </div>
+              </div>
+              <div
+                id="totalTable"
+                class="row"
+                style="padding: 50px; margin-bottom: 80px !important"
+              ></div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                style="margin-bottom: 20px"
+              >
+                Close
+              </button>
+            </div>
+            <p style="text-align: center">CHERRY NAILS</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
