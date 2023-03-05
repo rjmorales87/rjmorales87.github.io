@@ -18,12 +18,10 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        display: flex;
-        padding-bottom: 20px;
       }
       .card {
         width: 100% !important;
-        height: 400px;
+        height: 300px;
       }
       .cardSmall {
         width: 100% !important;
@@ -31,16 +29,16 @@
       }
       .card-title {
         font-size: 60px;
-        padding-top: 40%;
+        padding-top: 25%;
       }
       .card-titleSmall {
         padding-top: 20%;
       }
       .titleStyle {
         text-align: center;
-        padding-bottom: 80px;
         padding-top: 25px;
         font-size: 70px !important;
+        padding-bottom: 0px;
       }
       .buttonStyle {
         justify-content: center;
@@ -48,7 +46,6 @@
         text-align: center;
         display: flex;
         padding-bottom: 20px;
-        padding-top: 90px;
       }
       .showSection {
         animation-name: fadeIn;
@@ -98,7 +95,7 @@
         animation-fill-mode: forwards;
       }
       .sectionStyle {
-        height: 1560px;
+        min-height: 1460px;
       }
       .accessoriesBtnStyle {
         width: 100px;
@@ -146,7 +143,7 @@
       .totalStyle {
         text-align: center;
         font-size: 100px;
-        color: #ffbdbd;
+        color: #c55a5a;
         margin-top: 50px;
         margin-bottom: 50px;
       }
@@ -811,7 +808,6 @@
         <div class="col-6" style="text-align: end">
           <h1 id="totalPlaceholder" class="topBannerStyle">Total: $</h1>
         </div>
-        <hr />
       </div>
       <!--End title-->
       <!--Main Content-->
@@ -910,7 +906,6 @@
               </div>
             </div>
           </div>
-          <hr />
         </div>
         <!--End Nail length Content-->
         <!--Nail Shape Content-->
@@ -1006,7 +1001,6 @@
               </div>
             </div>
           </div>
-          <hr />
         </div>
         <!--End Nail Shape Content-->
         <!--Nail Technique Content-->
@@ -1155,7 +1149,18 @@
               </div>
             </div>
           </div>
-          <hr />
+          <div id="nextButtonTech" class="row hideSection">
+            <div class="col-12 buttonStyle">
+              <button
+                onclick="goNextTech()"
+                style="width: 400px; height: 200px; font-size: 60px"
+                class="btn btn-primary"
+                type="button"
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
         <!--End Nail Technique Content-->
         <div id="accessories" class="row hideSection sectionStyle">
@@ -1286,7 +1291,19 @@
               </div>
             </div>
           </div>
-          <hr />
+          <div class="row buttonSection hideSection">
+            <div class="col-12 buttonStyle">
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#genModal"
+                style="width: 400px; height: 200px; font-size: 60px"
+                class="btn btn-primary"
+                type="button"
+              >
+                Calculate
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <!--End Main Content-->
@@ -1329,33 +1346,6 @@
           ></button>
         </div>
       </div>
-      <!--Button-->
-      <div class="row buttonSection hideSection">
-        <div class="col-12 buttonStyle">
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#genModal"
-            style="width: 400px; height: 200px; font-size: 60px"
-            class="btn btn-primary"
-            type="button"
-          >
-            Calculate
-          </button>
-        </div>
-      </div>
-      <div id="nextButtonTech" class="row hideSection">
-        <div class="col-12 buttonStyle">
-          <button
-            onclick="goNextTech()"
-            style="width: 400px; height: 200px; font-size: 60px"
-            class="btn btn-primary"
-            type="button"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-      <!--End Button-->
       <!--Modal-->
       <div
         class="modal fade"
