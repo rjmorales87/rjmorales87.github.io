@@ -25,14 +25,14 @@
       }
       .cardSmall {
         width: 100% !important;
-        height: 200px !important;
+        height: 100px !important;
       }
       .card-title {
         font-size: 60px;
         padding-top: 25%;
       }
       .card-titleSmall {
-        padding-top: 20%;
+        padding-top: 0px;
       }
       .titleStyle {
         text-align: center;
@@ -147,6 +147,16 @@
         margin-top: 50px;
         margin-bottom: 50px;
       }
+      .form-check {
+        display: flex !important;
+        font-size: 60px;
+        justify-content: center;
+        align-items: center;
+      }
+      .form-check-input:checked {
+        background-color: #f1cbff;
+        border-color: #f1cbff;
+      }
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -171,13 +181,13 @@
           background-color: grey;
         }
         to {
-          width: 100px;
+          width: 80px;
           background-color: #f1cbff;
         }
       }
       @keyframes widthOut {
         from {
-          width: 100px;
+          width: 80px;
           background-color: #f1cbff;
         }
         to {
@@ -210,6 +220,11 @@
         animation-duration: 1s;
         position: relative;
       }
+      .inputStyle {
+        height: 120px;
+        font-size: 60px;
+        text-align: center;
+      }
     </style>
     <script>
       //PRICES SETUP
@@ -217,10 +232,15 @@
       let nailLength = 0;
       let nailShape = "";
       let nailShapePrice = 0;
+      let nailAccPrice = 0;
       let tech = [];
       let techPrice = [];
+      let techQty = [];
+      let techDiff = [];
       let acc = [];
       let accPrice = [];
+      let accQty = [];
+      let accDiff = [];
       let diff = "";
       let stones = 0;
       let stonesPrice = 0;
@@ -232,6 +252,12 @@
       let otherPrice = 0;
       let accesories = 0;
       let tempTechWaitingOnDifficulty = "";
+      let tempShape = "";
+      let tempDiff = [];
+      let tempQty = [];
+      let materialRemoval = 0;
+      let lateArrival = 0;
+      let deposit = 0;
       //Prices
       function calculatePrices() {
         //length
@@ -245,43 +271,293 @@
         //Shape
         switch (nailShape) {
           case "round":
-            totalPrice += 1.0;
-            nailShapePrice = 1;
+            totalPrice += 0;
+            nailShapePrice = 0;
             break;
           case "square":
-            totalPrice += 2.0;
-            nailShapePrice = 2;
+            totalPrice += 0;
+            nailShapePrice = 0;
             break;
           case "almond":
-            totalPrice += 3.0;
-            nailShapePrice = 3;
-            break;
-          case "ballerina":
-            totalPrice += 4.0;
-            nailShapePrice = 4;
-            break;
-          case "stiletto":
-            totalPrice += 5.0;
+            totalPrice += 5;
             nailShapePrice = 5;
             break;
-          case "other":
-            totalPrice += 6.0;
-            nailShapePrice = 6;
+          case "ballerina":
+            totalPrice += 5;
+            nailShapePrice = 5;
+            break;
+          case "stiletto":
+            totalPrice += 5;
+            nailShapePrice = 5;
             break;
           default:
+            totalPrice += nailShapePrice;
             break;
         }
         //technique
         let techPriceTotal = 0;
-        for (x = 0; x < techPrice.length; x++) {
-          totalPrice += techPrice[x];
-          techPriceTotal += techPrice[x];
-        }
-        // Accessories
-        for (x = 0; x < accPrice.length; x++) {
-          totalPrice += accPrice[x];
+        techPrice = [];
+        for (x = 0; x < tech.length; x++) {
+          switch (tech[x]) {
+            case "encapsulated":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 5 * techQty[x];
+                  techPriceTotal += 5 * techQty[x];
+                  techPrice.push(5 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 8 * techQty[x];
+                  techPriceTotal += 8 * techQty[x];
+                  techPrice.push(8 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 10 * techQty[x];
+                  techPriceTotal += 10 * techQty[x];
+                  techPrice.push(10 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "handpainted":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * techQty[x];
+                  techPriceTotal += 1 * techQty[x];
+                  techPrice.push(1 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 2 * techQty[x];
+                  techPriceTotal += 2 * techQty[x];
+                  techPrice.push(2 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 3 * techQty[x];
+                  techPriceTotal += 3 * techQty[x];
+                  techPrice.push(3 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "3d":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 3 * techQty[x];
+                  techPriceTotal += 3 * techQty[x];
+                  techPrice.push(3 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 6 * techQty[x];
+                  techPriceTotal += 6 * techQty[x];
+                  techPrice.push(6 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 9 * techQty[x];
+                  techPriceTotal += 9 * techQty[x];
+                  techPrice.push(9 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "chrome":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * techQty[x];
+                  techPriceTotal += 1 * techQty[x];
+                  techPrice.push(1 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 3 * techQty[x];
+                  techPriceTotal += 3 * techQty[x];
+                  techPrice.push(3 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 5 * techQty[x];
+                  techPriceTotal += 5 * techQty[x];
+                  techPrice.push(5 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "french":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * techQty[x];
+                  techPriceTotal += 1 * techQty[x];
+                  techPrice.push(1 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 2 * techQty[x];
+                  techPriceTotal += 2 * techQty[x];
+                  techPrice.push(2 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 3 * techQty[x];
+                  techPriceTotal += 3 * techQty[x];
+                  techPrice.push(3 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "sugar":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * techQty[x];
+                  techPriceTotal += 1 * techQty[x];
+                  techPrice.push(1 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 2 * techQty[x];
+                  techPriceTotal += 2 * techQty[x];
+                  techPrice.push(2 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 3 * techQty[x];
+                  techPriceTotal += 3 * techQty[x];
+                  techPrice.push(3 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "reverse":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 5 * techQty[x];
+                  techPriceTotal += 5 * techQty[x];
+                  techPrice.push(5 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 8 * techQty[x];
+                  techPriceTotal += 8 * techQty[x];
+                  techPrice.push(8 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 10 * techQty[x];
+                  techPriceTotal += 10 * techQty[x];
+                  techPrice.push(10 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "babyboomer":
+              switch (techDiff[x]) {
+                case "easy":
+                  totalPrice += 5 * techQty[x];
+                  techPriceTotal += 5 * techQty[x];
+                  techPrice.push(5 * techQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 8 * techQty[x];
+                  techPriceTotal += 8 * techQty[x];
+                  techPrice.push(8 * techQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 10 * techQty[x];
+                  techPriceTotal += 10 * techQty[x];
+                  techPrice.push(10 * techQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+
+            default:
+              break;
+          }
         }
 
+        // Accessories
+        let accPriceTotal = 0;
+        accPrice = [];
+        for (x = 0; x < acc.length; x++) {
+          switch (acc[x]) {
+            case "stones":
+              switch (accDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * accQty[x];
+                  accPriceTotal += 1 * accQty[x];
+                  accPrice.push(1 * accQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 3 * accQty[x];
+                  accPriceTotal += 3 * accQty[x];
+                  accPrice.push(3 * accQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 5 * accQty[x];
+                  accPriceTotal += 5 * accQty[x];
+                  accPrice.push(5 * accQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "charms":
+              switch (accDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * accQty[x];
+                  accPriceTotal += 1 * accQty[x];
+                  accPrice.push(1 * accQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 2 * accQty[x];
+                  accPriceTotal += 2 * accQty[x];
+                  accPrice.push(2 * accQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 3 * accQty[x];
+                  accPriceTotal += 3 * accQty[x];
+                  accPrice.push(3 * accQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case "stickers":
+              switch (accDiff[x]) {
+                case "easy":
+                  totalPrice += 1 * accQty[x];
+                  accPriceTotal += 1 * accQty[x];
+                  accPrice.push(1 * accQty[x]);
+                  break;
+                case "medium":
+                  totalPrice += 2 * accQty[x];
+                  accPriceTotal += 2 * accQty[x];
+                  accPrice.push(2 * accQty[x]);
+                  break;
+                case "hard":
+                  totalPrice += 3 * accQty[x];
+                  accPriceTotal += 3 * accQty[x];
+                  accPrice.push(3 * accQty[x]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              break;
+          }
+        }
+        if (nailAccPrice > 0) {
+          totalPrice += nailAccPrice;
+        }
+
+        if (materialRemoval > 0) {
+          totalPrice += materialRemoval;
+        }
+        if (lateArrival > 0) {
+          totalPrice += lateArrival;
+        }
+        if (deposit > 0) {
+          totalPrice = totalPrice - deposit;
+        }
         let totalPlaceholder = document.getElementById("totalPlaceholder");
         totalPlaceholder.innerText = "Total: $" + totalPrice;
 
@@ -324,7 +600,7 @@
           table += "</div>";
         }
 
-        if (techPrice.length > 0) {
+        if (tech.length > 0) {
           table += "<div class='row'>";
           table +=
             "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
@@ -332,7 +608,12 @@
             "<div class='row'><div class='col-12'><h2>Technique</h2></div></div>";
           table += "<div class='row'><div class='col-12'><ul>";
           for (x = 0; x < tech.length; x++) {
-            table += "<li><h2>" + tech[x].toUpperCase() + "</h2></li>";
+            table +=
+              "<li><h2>" +
+              tech[x].toUpperCase() +
+              " x" +
+              techQty[x] +
+              "</h2></li>";
           }
           table += "</ul></div></div>";
           table += "</div>";
@@ -348,7 +629,7 @@
           table += "</div>";
           table += "</div>";
         }
-        if (accPrice.length > 0) {
+        if (accPrice.length > 0 || nailAccPrice > 0) {
           table += "<div class='row'>";
           table +=
             "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
@@ -356,7 +637,15 @@
             "<div class='row'><div class='col-12'><h2>Accessories</h2></div></div>";
           table += "<div class='row'><div class='col-12'><ul>";
           for (x = 0; x < acc.length; x++) {
-            table += "<li><h2>" + acc[x].toUpperCase() + "</h2></li>";
+            table +=
+              "<li><h2>" +
+              acc[x].toUpperCase() +
+              " x" +
+              accQty[x] +
+              "</h2></li>";
+          }
+          if (nailAccPrice > 0) {
+            table += "<li><h2>OTHER x1 </h2></li>";
           }
           table += "</ul></div></div>";
           table += "</div>";
@@ -368,7 +657,43 @@
           for (x = 0; x < accPrice.length; x++) {
             table += "<li><h2>$" + accPrice[x] + ".00</h2></li>";
           }
+          if (nailAccPrice > 0) {
+            table += "<li><h2>$" + nailAccPrice + ".00</h2></li>";
+          }
           table += "</ul></div></div>";
+          table += "</div>";
+          table += "</div>";
+        }
+        if (materialRemoval > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+          table += "<h2>Material Removal</h2>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table += "<h2>$" + materialRemoval + ".00</h2>";
+          table += "</div>";
+          table += "</div>";
+        }
+        if (lateArrival > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+          table += "<h2>Late Arrival</h2>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table += "<h2>$" + lateArrival + ".00</h2>";
+          table += "</div>";
+          table += "</div>";
+        }
+        if (deposit > 0) {
+          table += "<div class='row'>";
+          table +=
+            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+          table += "<h2>Deposit</h2>";
+          table += "</div>";
+          table += "<div class='col-2'>";
+          table += "<h2>-$" + deposit + ".00</h2>";
           table += "</div>";
           table += "</div>";
         }
@@ -394,26 +719,28 @@
         }, 500);
       }
       function getNailShape(s) {
-        let arr = [
-          "round",
-          "square",
-          "almond",
-          "ballerina",
-          "stiletto",
-          "other",
-        ];
-        nailShape = s.id;
-        selectCard(s);
-        let arrSel = [s.id];
-        deselectCard(arrSel, arr);
-        calculatePrices();
-        let moveOut = document.getElementById("nailShape");
-        moveOut.classList.add("moveOut");
-        setTimeout(function () {
-          nextSection("technique");
-          nextStageBtn("techniqueBtn");
-          moveOut.classList.remove("moveOut");
-        }, 500);
+        if (tempShape == "") {
+          let arr = [
+            "round",
+            "square",
+            "almond",
+            "ballerina",
+            "stiletto",
+            "other",
+          ];
+          nailShape = s.id;
+          selectCard(s);
+          let arrSel = [s.id];
+          deselectCard(arrSel, arr);
+          calculatePrices();
+          let moveOut = document.getElementById("nailShape");
+          moveOut.classList.add("moveOut");
+          setTimeout(function () {
+            nextSection("technique");
+            nextStageBtn("techniqueBtn");
+            moveOut.classList.remove("moveOut");
+          }, 500);
+        }
       }
       function disableTechCards(status) {
         let arr = [
@@ -423,10 +750,36 @@
           "chrome",
           "french",
           "sugar",
+          "reverse",
+          "babyboomer",
           "stones",
           "charms",
           "stickers",
           "otherAcc",
+        ];
+
+        if (status === true) {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.add("disabledCards");
+            div.classList.remove("enabledCards");
+          }
+        } else {
+          for (x = 0; x < arr.length; x++) {
+            let div = document.getElementById(arr[x]);
+            div.classList.remove("disabledCards");
+            div.classList.add("enabledCards");
+          }
+        }
+      }
+      function disableShapeCards(status) {
+        let arr = [
+          "round",
+          "square",
+          "almond",
+          "ballerina",
+          "stiletto",
+          "other",
         ];
 
         if (status === true) {
@@ -463,12 +816,20 @@
       function getTechnique(t) {
         if (tempTechWaitingOnDifficulty === "") {
           if (tech.includes(t.id)) {
-            let index = 0;
-            index = tech.indexOf(t.id);
-            tech = tech.filter(function (item) {
-              return item !== t.id;
-            });
-            techPrice = techPrice.slice(index + 1);
+            let tempTech = [];
+            for (x = 0; x < tech.length; x++) {
+              if (t.id !== tech[x]) {
+                tempDiff.push(techDiff[x]);
+                tempQty.push(techQty[x]);
+                tempTech.push(tech[x]);
+              }
+            }
+            techDiff = tempDiff;
+            techQty = tempQty;
+            tech = tempTech;
+            tempQty = [];
+            tempDiff = [];
+
             let arr = [
               "encapsulated",
               "handpainted",
@@ -476,6 +837,8 @@
               "chrome",
               "french",
               "sugar",
+              "reverse",
+              "babyboomer",
             ];
             deselectCard(tech, arr);
             calculatePrices();
@@ -507,12 +870,19 @@
       function getAccesories(t) {
         if (tempTechWaitingOnDifficulty === "") {
           if (acc.includes(t.id)) {
-            let index = 0;
-            index = acc.indexOf(t.id);
-            acc = acc.filter(function (item) {
-              return item !== t.id;
-            });
-            accPrice = accPrice.slice(index + 1);
+            let tempAcc = [];
+            for (x = 0; x < acc.length; x++) {
+              if (t.id !== acc[x]) {
+                tempDiff.push(accDiff[x]);
+                tempQty.push(accQty[x]);
+                tempAcc.push(acc[x]);
+              }
+            }
+            accDiff = tempDiff;
+            accQty = tempQty;
+            acc = tempAcc;
+            tempQty = [];
+            tempDiff = [];
             let arr = ["stones", "charms", "stickers", "otherAcc"];
             deselectCard(acc, arr);
             calculatePrices();
@@ -529,13 +899,32 @@
             let showNav = document.getElementById("navSection");
             showNav.classList.remove("showSection");
             showNav.classList.add("hideSection");
-            let section = document.getElementsByClassName("buttonSection");
+            let section = document.getElementsByClassName("nextButtonMisc");
             section[0].classList.add("hideSection");
             section[0].classList.remove("showSection");
           }
         }
       }
-      function getDifficulty(d, s) {
+      function setDifficulty(d) {
+        if (tempDiff.includes(d.id)) {
+          let index = tempDiff.indexOf(d.id);
+          let temArr = [];
+          for (x = 0; x < tempDiff.length; x++) {
+            if (x != index) {
+              temArr.push(tempDiff[x]);
+            } else {
+              let difCard = document.getElementById(tempDiff[x]);
+              difCard.classList.remove("cardSelected");
+            }
+          }
+          tempDiff = temArr;
+        } else {
+          tempDiff.push(d.id);
+          let difCard = document.getElementById(d.id);
+          difCard.classList.add("cardSelected");
+        }
+      }
+      function getDifficulty(d, s, diff) {
         let arr = [];
         if (s == "technique") {
           arr = ["easy", "medium", "hard"];
@@ -545,36 +934,174 @@
 
         selectCard(d);
         let arrSel = [d.id];
-        deselectCard(arrSel, arr);
+        //deselectCard(arrSel, arr);
         //technique
         let price = 0;
         switch (tempTechWaitingOnDifficulty) {
           case "encapsulated":
-            price = 1.0;
+            switch (diff) {
+              case "e":
+                price = 5;
+                break;
+              case "m":
+                price = 8;
+                break;
+              case "h":
+                price = 10;
+                break;
+              default:
+                break;
+            }
             break;
           case "handpainted":
-            price = 2.0;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 2;
+                break;
+              case "h":
+                price = 3;
+                break;
+              default:
+                break;
+            }
             break;
           case "3d":
-            price = 3.0;
+            switch (diff) {
+              case "e":
+                price = 3;
+                break;
+              case "m":
+                price = 6;
+                break;
+              case "h":
+                price = 9;
+                break;
+              default:
+                break;
+            }
             break;
           case "chrome":
-            price = 4.0;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 3;
+                break;
+              case "h":
+                price = 5;
+                break;
+              default:
+                break;
+            }
             break;
           case "french":
-            price = 5.0;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 2;
+                break;
+              case "h":
+                price = 3;
+                break;
+              default:
+                break;
+            }
             break;
           case "sugar":
-            price = 6.0;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 2;
+                break;
+              case "h":
+                price = 3;
+                break;
+              default:
+                break;
+            }
+            break;
+          case "reverse":
+            switch (diff) {
+              case "e":
+                price = 5;
+                break;
+              case "m":
+                price = 8;
+                break;
+              case "h":
+                price = 10;
+                break;
+              default:
+                break;
+            }
+            break;
+          case "babyboomer":
+            switch (diff) {
+              case "e":
+                price = 5;
+                break;
+              case "m":
+                price = 8;
+                break;
+              case "h":
+                price = 10;
+                break;
+              default:
+                break;
+            }
             break;
           case "stones":
-            price = 7;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 3;
+                break;
+              case "h":
+                price = 5;
+                break;
+              default:
+                break;
+            }
             break;
           case "charms":
-            price = 8;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 2;
+                break;
+              case "h":
+                price = 3;
+                break;
+              default:
+                break;
+            }
             break;
           case "stickers":
-            price = 9;
+            switch (diff) {
+              case "e":
+                price = 1;
+                break;
+              case "m":
+                price = 2;
+                break;
+              case "h":
+                price = 3;
+                break;
+              default:
+                break;
+            }
             break;
           case "otherAcc":
             price = 10;
@@ -633,7 +1160,7 @@
         showNav.classList.add("showSection");
         showNav.classList.remove("hideSection");
         if (s == "acc") {
-          let section = document.getElementsByClassName("buttonSection");
+          let section = document.getElementsByClassName("nextButtonMisc");
           section[0].classList.add("showSection");
           section[0].classList.remove("hideSection");
         }
@@ -649,11 +1176,11 @@
         nextSection.classList.remove("hideSection");
 
         if (next == "accessories") {
-          let section = document.getElementsByClassName("buttonSection");
+          let section = document.getElementsByClassName("nextButtonMisc");
           section[0].classList.remove("hideSection");
           section[0].classList.add("showSection");
         } else {
-          let section = document.getElementsByClassName("buttonSection");
+          let section = document.getElementsByClassName("nextButtonMisc");
           section[0].classList.add("hideSection");
           section[0].classList.remove("showSection");
         }
@@ -699,6 +1226,10 @@
             nextSection("accessories");
             nextStageBtn("accessoriesBtn");
             break;
+          case "miscellaneousBtn":
+            nextSection("miscellaneous");
+            nextStageBtn("miscellaneousBtn");
+            break;
           default:
             break;
         }
@@ -728,53 +1259,151 @@
       function add(a) {
         let input = document.getElementById(a);
         let inputVal = input.value;
+        if (inputVal == "") {
+          inputVal = 0;
+        }
         inputVal++;
         input.value = inputVal;
-
-        switch (a) {
-          case "stonesInput":
-            stones++;
-            break;
-          case "charmsInput":
-            charms++;
-            break;
-          case "stickersInput":
-            stickers++;
-            break;
-          case "otherInput":
-            other++;
-            break;
-
-          default:
-            break;
+        if (a == "eInput" || a == "eInputAcc") {
+          if (!tempDiff.includes("easy")) {
+            tempDiff.push("easy");
+            tempQty.push(inputVal);
+          } else {
+            let index = tempDiff.indexOf("easy");
+            tempQty[index] = inputVal;
+          }
         }
-        calculatePrices();
+        if (a == "mInput" || a == "mInputAcc") {
+          if (!tempDiff.includes("medium")) {
+            tempDiff.push("medium");
+            tempQty.push(inputVal);
+          } else {
+            let index = tempDiff.indexOf("medium");
+            tempQty[index] = inputVal;
+          }
+        }
+        if (a == "hInput" || a == "hInputAcc") {
+          if (!tempDiff.includes("hard")) {
+            tempDiff.push("hard");
+            tempQty.push(inputVal);
+          } else {
+            let index = tempDiff.indexOf("hard");
+            tempQty[index] = inputVal;
+          }
+        }
+
+        // switch (a) {
+        //   case "stonesInput":
+        //     stones++;
+        //     break;
+        //   case "charmsInput":
+        //     charms++;
+        //     break;
+        //   case "stickersInput":
+        //     stickers++;
+        //     break;
+        //   case "otherInput":
+        //     other++;
+        //     break;
+
+        //   default:
+        //     break;
+        // }
+        // calculatePrices();
       }
       function substract(a) {
         let input = document.getElementById(a);
         let inputVal = input.value;
+        if (inputVal == "") {
+          inputVal = 0;
+        }
         if (inputVal > 0) {
           inputVal--;
           input.value = inputVal;
-          switch (a) {
-            case "stonesInput":
-              stones--;
-              break;
-            case "charmsInput":
-              charms--;
-              break;
-            case "stickersInput":
-              stickers--;
-              break;
-            case "otherInput":
-              other--;
-              break;
+          // switch (a) {
+          //   case "stonesInput":
+          //     stones--;
+          //     break;
+          //   case "charmsInput":
+          //     charms--;
+          //     break;
+          //   case "stickersInput":
+          //     stickers--;
+          //     break;
+          //   case "otherInput":
+          //     other--;
+          //     break;
 
-            default:
-              break;
+          //   default:
+          //     break;
+          // }
+          if (
+            (a == "eInput" || a == "eInputAcc") &&
+            tempDiff.includes("easy")
+          ) {
+            if (inputVal == 0) {
+              let index = tempDiff.indexOf("easy");
+              let arr = [];
+              for (x = 0; x < tempQty.length; x++) {
+                if (x !== index) {
+                  arr.push(tempQty[x]);
+                }
+              }
+              tempQty = arr;
+              tempDiff = tempDiff.filter(function (item) {
+                return item !== "easy";
+              });
+            } else {
+              let index = tempDiff.indexOf("easy");
+              tempQty[index] = inputVal;
+            }
+          }
+
+          if (
+            (a == "mInput" || a == "mInputAcc") &&
+            tempDiff.includes("medium")
+          ) {
+            if (inputVal == 0) {
+              let index = tempDiff.indexOf("medium");
+              let arr = [];
+              for (x = 0; x < tempQty.length; x++) {
+                if (x !== index) {
+                  arr.push(tempQty[x]);
+                }
+              }
+              tempQty = arr;
+              tempDiff = tempDiff.filter(function (item) {
+                return item !== "medium";
+              });
+            } else {
+              let index = tempDiff.indexOf("medium");
+              tempQty[index] = inputVal;
+            }
+          }
+          if (
+            (a == "hInput" || a == "hInputAcc") &&
+            tempDiff.includes("hard")
+          ) {
+            if (inputVal == 0) {
+              let index = tempDiff.indexOf("hard");
+              let arr = [];
+              for (x = 0; x < tempQty.length; x++) {
+                if (x !== index) {
+                  arr.push(tempQty[x]);
+                }
+              }
+              tempQty = arr;
+              tempDiff = tempDiff.filter(function (item) {
+                return item !== "hard";
+              });
+            } else {
+              let index = tempDiff.indexOf("hard");
+              tempQty[index] = inputVal;
+            }
           }
         }
-        calculatePrices();
+
+        //calculatePrices();
       }
       function goNextTech() {
         let moveOut = document.getElementById("technique");
@@ -782,13 +1411,219 @@
         setTimeout(function () {
           nextSection("accessories");
           nextStageBtn("accessoriesBtn");
+          moveOut.classList.remove("moveOut");
+        }, 500);
+
+        // let showBtn = document.getElementById("nextButtonTech");
+        // showBtn.classList.remove("showSection");
+        // showBtn.classList.add("hideSection");
+      }
+      function goNextMisc() {
+        let moveOut = document.getElementById("accessories");
+        moveOut.classList.add("moveOut");
+        setTimeout(function () {
+          nextSection("miscellaneous");
+          nextStageBtn("miscellaneousBtn");
+          moveOut.classList.remove("moveOut");
         }, 500);
 
         let showBtn = document.getElementById("nextButtonTech");
         showBtn.classList.remove("showSection");
         showBtn.classList.add("hideSection");
       }
-      function generateInvoice() {}
+      function showInput(s) {
+        if (s.id == "other") {
+          if (nailShapePrice > 0) {
+            nailShapePrice = 0;
+            let cardselected = document.getElementById("other");
+            cardselected.classList.remove("cardSelected");
+            tempShape = "";
+            calculatePrices();
+          } else {
+            let inputSection = document.getElementById("inputSection");
+            inputSection.classList.add("showSection");
+            inputSection.classList.remove("hideSection");
+            disableShapeCards(true);
+            tempShape = s.id;
+          }
+        } else {
+          if (nailAccPrice > 0) {
+            nailAccPrice = 0;
+            let cardselected = document.getElementById("otherAcc");
+            cardselected.classList.remove("cardSelected");
+            let claBtn = document.getElementsByClassName("nextButtonMisc");
+            claBtn[0].classList.remove("hideSection");
+            claBtn[0].classList.add("showSection");
+            calculatePrices();
+          } else {
+            let inputSection = document.getElementById("inputSectionAcc");
+            inputSection.classList.add("showSection");
+            inputSection.classList.remove("hideSection");
+            selectCard(s);
+            disableAccCards(true);
+            let claBtn = document.getElementsByClassName("nextButtonMisc");
+            claBtn[0].classList.add("hideSection");
+            claBtn[0].classList.remove("showSection");
+          }
+        }
+      }
+      function addPriceShape() {
+        let price = document.getElementById("otherInput");
+        let p = parseInt(price.value);
+        if (!isNaN(p)) {
+          let arr = [
+            "round",
+            "square",
+            "almond",
+            "ballerina",
+            "stiletto",
+            "other",
+          ];
+          nailShape = "other";
+          nailShapePrice = parseInt(price.value);
+          tempShape = "";
+          disableShapeCards(false);
+          selectCard(document.getElementById("other"));
+          deselectCard("other", arr);
+          calculatePrices();
+          let moveOut = document.getElementById("nailShape");
+          moveOut.classList.add("moveOut");
+          setTimeout(function () {
+            nextSection("technique");
+            nextStageBtn("techniqueBtn");
+            moveOut.classList.remove("moveOut");
+          }, 500);
+          let inputSection = document.getElementById("inputSection");
+          inputSection.classList.remove("showSection");
+          inputSection.classList.add("hideSection");
+        } else {
+          selectCard(document.getElementById("otherInput"));
+        }
+        price.value = "";
+      }
+      function addPriceAcc() {
+        let price = document.getElementById("otherInputAcc");
+        let p = parseInt(price.value);
+        if (!isNaN(p)) {
+          let arr = ["stones", "charms", "stickers", "otherAcc"];
+          nailAccPrice = parseInt(price.value);
+          disableAccCards(false);
+          calculatePrices();
+          // let moveOut = document.getElementById("nailShape");
+          // moveOut.classList.add("moveOut");
+          // setTimeout(function () {
+          //   nextSection("technique");
+          //   nextStageBtn("techniqueBtn");
+          //   moveOut.classList.remove("moveOut");
+          // }, 500);
+          let inputSection = document.getElementById("inputSectionAcc");
+          inputSection.classList.remove("showSection");
+          inputSection.classList.add("hideSection");
+          let claBtn = document.getElementsByClassName("nextButtonMisc");
+          claBtn[0].classList.add("showSection");
+          claBtn[0].classList.remove("hideSection");
+        } else {
+          selectCard(document.getElementById("otherInputAcc"));
+        }
+        price.value = "";
+      }
+      function addTechCalc(s) {
+        if (s == "technique") {
+          for (x = 0; x < tempDiff.length; x++) {
+            tech.push(tempTechWaitingOnDifficulty);
+            techDiff.push(tempDiff[x]);
+            techQty.push(tempQty[x]);
+          }
+        } else {
+          for (x = 0; x < tempDiff.length; x++) {
+            acc.push(tempTechWaitingOnDifficulty);
+            accDiff.push(tempDiff[x]);
+            accQty.push(tempQty[x]);
+          }
+        }
+
+        tempDiff = [];
+        tempQty = [];
+        tempTechWaitingOnDifficulty = "";
+
+        calculatePrices();
+        let showDiff = null;
+        if (s == "technique") {
+          showDiff = document.getElementById("difficulty");
+        } else {
+          showDiff = document.getElementById("difficultyAccessories");
+        }
+        showDiff.classList.add("hideSection");
+        showDiff.classList.remove("showSection");
+
+        tempTechWaitingOnDifficulty = "";
+        disableTechCards(false);
+        deselectAllDifficulties();
+
+        if (tech.length > 0 && s == "technique") {
+          let showBtn = document.getElementById("nextButtonTech");
+          showBtn.classList.add("showSection");
+          showBtn.classList.remove("hideSection");
+        } else {
+          let showBtn = document.getElementById("nextButtonTech");
+          showBtn.classList.remove("showSection");
+          showBtn.classList.add("hideSection");
+        }
+        let showNav = document.getElementById("navSection");
+        showNav.classList.add("showSection");
+        showNav.classList.remove("hideSection");
+        if (s == "acc") {
+          let section = document.getElementsByClassName("nextButtonMisc");
+          section[0].classList.add("showSection");
+          section[0].classList.remove("hideSection");
+        }
+
+        let i1 = document.getElementById("eInput");
+        i1.value = 0;
+        let i2 = document.getElementById("mInput");
+        i2.value = 0;
+        let i3 = document.getElementById("hInput");
+        i3.value = 0;
+
+        let i1b = document.getElementById("eInputAcc");
+        i1b.value = 0;
+        let i2b = document.getElementById("mInputAcc");
+        i2b.value = 0;
+        let i3b = document.getElementById("hInputAcc");
+        i3b.value = 0;
+      }
+      function addRemoval() {
+        if (materialRemoval == 0) {
+          materialRemoval = 5;
+        } else {
+          materialRemoval = 0;
+        }
+        calculatePrices();
+      }
+      function addLateArrival() {
+        if (lateArrival == 0) {
+          lateArrival = 5;
+        } else {
+          lateArrival = 0;
+        }
+        calculatePrices();
+      }
+      function addDeposit(d) {
+        let dep = document.getElementById(d);
+        let depVal = parseInt(dep.value);
+        if (!isNaN(depVal)) {
+          deposit = depVal;
+          calculatePrices();
+          dep.classList.remove("cardSelected");
+        } else {
+          if (dep.value !== "") {
+            selectCard(dep);
+          } else {
+            deposit = 0;
+            calculatePrices();
+          }
+        }
+      }
     </script>
   </head>
   <body style="background-color: rgb(233, 231, 231)">
@@ -992,12 +1827,38 @@
                 id="other"
                 class="card"
                 style="width: 9rem"
-                onclick="getNailShape(this)"
+                onclick="showInput(this)"
               >
                 <!--img src="..." class="card-img-top" alt="..." /-->
                 <div class="card-body">
                   <h5 class="card-title">Other</h5>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div id="inputSection" class="row hideSection">
+            <div class="row">
+              <dic class="col-12">
+                <h3 class="titleStyle">Price</h3>
+              </dic>
+            </div>
+            <div class="row">
+              <div class="col-10">
+                <input
+                  class="form-control inputStyle"
+                  id="otherInput"
+                  placeholder="$0.00"
+                />
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn btn-primary buttonStyle"
+                  style="height: 118px; width: 100%; font-size: 50px"
+                  onclick="addPriceShape()"
+                >
+                  GO
+                </button>
               </div>
             </div>
           </div>
@@ -1012,7 +1873,7 @@
             </div>
           </div>
           <!--End Title-->
-          <div class="row">
+          <div class="row" style="padding: 10px">
             <div class="col-4 cardStyle1">
               <div
                 id="encapsulated"
@@ -1023,7 +1884,7 @@
                 <!--img src="..." class="card-img-top" alt="..." /-->
                 <div class="card-body">
                   <h5
-                    style="font-size: 36px; padding-top: 60%"
+                    style="font-size: 36px; padding-top: 45%"
                     class="card-title"
                   >
                     Encapsulated
@@ -1053,12 +1914,12 @@
               >
                 <!--img src="..." class="card-img-top" alt="..." /-->
                 <div class="card-body">
-                  <h5 style="padding-top: 60%" class="card-title">3D</h5>
+                  <h5 style="padding-top: 45%" class="card-title">3D</h5>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="padding: 10px">
             <div class="col-4 cardStyle1">
               <div
                 id="chrome"
@@ -1068,7 +1929,7 @@
               >
                 <!--img src="..." class="card-img-top" alt="..." /-->
                 <div class="card-body">
-                  <h5 style="padding-top: 60%" class="card-title">Chrome</h5>
+                  <h5 style="padding-top: 45%" class="card-title">Chrome</h5>
                 </div>
               </div>
             </div>
@@ -1081,7 +1942,7 @@
               >
                 <!--img src="..." class="card-img-top" alt="..." /-->
                 <div class="card-body">
-                  <h5 style="padding-top: 60%" class="card-title">French</h5>
+                  <h5 style="padding-top: 45%" class="card-title">French</h5>
                 </div>
               </div>
             </div>
@@ -1099,6 +1960,34 @@
               </div>
             </div>
           </div>
+          <div class="row" style="padding: 10px">
+            <div class="col-6 cardStyle1">
+              <div
+                id="reverse"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Reverse</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 cardStyle1">
+              <div
+                id="babyboomer"
+                class="card"
+                style="width: 9rem"
+                onclick="getTechnique(this)"
+              >
+                <!--img src="..." class="card-img-top" alt="..." /-->
+                <div class="card-body">
+                  <h5 class="card-title">Baby Boomer</h5>
+                </div>
+              </div>
+            </div>
+          </div>
           <div id="difficulty" class="row hideSection">
             <div class="row">
               <dic class="col-12">
@@ -1107,12 +1996,7 @@
             </div>
             <div class="row">
               <div class="col-4 cardStyle1">
-                <div
-                  id="easy"
-                  class="card cardSmall"
-                  style="width: 9rem"
-                  onclick="getDifficulty(this,'technique')"
-                >
+                <div id="easy" class="card cardSmall" style="width: 9rem">
                   <!--img src="..." class="card-img-top" alt="..." /-->
                   <div class="card-body">
                     <h5 class="card-title card-titleSmall">Easy</h5>
@@ -1121,12 +2005,7 @@
               </div>
 
               <div class="col-4 cardStyle1">
-                <div
-                  id="medium"
-                  class="card cardSmall"
-                  style="width: 9rem"
-                  onclick="getDifficulty(this, 'technique')"
-                >
+                <div id="medium" class="card cardSmall" style="width: 9rem">
                   <!--img src="..." class="card-img-top" alt="..." /-->
                   <div class="card-body">
                     <h5 class="card-title card-titleSmall">Med</h5>
@@ -1135,17 +2014,128 @@
               </div>
 
               <div class="col-4 cardStyle1">
-                <div
-                  id="hard"
-                  class="card cardSmall"
-                  style="width: 9rem"
-                  onclick="getDifficulty(this, 'technique')"
-                >
+                <div id="hard" class="card cardSmall" style="width: 9rem">
                   <!--img src="..." class="card-img-top" alt="..." /-->
                   <div class="card-body">
                     <h5 class="card-title card-titleSmall">Hard</h5>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px !important">
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('eInput')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="eInput"
+                      placeholder="0"
+                      disabled
+                      style="height: 100px !important"
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      onclick="add('eInput')"
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('mInput')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="mInput"
+                      placeholder="0"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="add('mInput')"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('hInput')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="hInput"
+                      placeholder="0"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="add('hInput')"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="addButton" class="row">
+              <div class="col-12">
+                <button
+                  onclick="addTechCalc('technique')"
+                  style="
+                    width: 100%;
+                    height: 100px;
+                    font-size: 49px;
+                    margin-top: 10px;
+                  "
+                  class="btn btn-primary"
+                  type="button"
+                >
+                  ADD
+                </button>
               </div>
             </div>
           </div>
@@ -1163,6 +2153,7 @@
           </div>
         </div>
         <!--End Nail Technique Content-->
+        <!--Nail Accessories Content-->
         <div id="accessories" class="row hideSection sectionStyle">
           <div class="row">
             <div class="col-12">
@@ -1230,7 +2221,7 @@
                     id="otherAcc"
                     class="card"
                     style="width: 9rem"
-                    onclick="getAccesories(this)"
+                    onclick="showInput(this)"
                   >
                     <!--img src="..." class="card-img-top" alt="..." /-->
                     <div class="card-body">
@@ -1238,6 +2229,32 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div id="inputSectionAcc" class="row hideSection">
+            <div class="row">
+              <dic class="col-12">
+                <h3 class="titleStyle">Price</h3>
+              </dic>
+            </div>
+            <div class="row">
+              <div class="col-10">
+                <input
+                  class="form-control inputStyle"
+                  id="otherInputAcc"
+                  placeholder="$0.00"
+                />
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn btn-primary buttonStyle"
+                  style="height: 118px; width: 100%; font-size: 50px"
+                  onclick="addPriceAcc()"
+                >
+                  GO
+                </button>
               </div>
             </div>
           </div>
@@ -1290,8 +2307,211 @@
                 </div>
               </div>
             </div>
+            <div class="row" style="margin-top: 20px !important">
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('eInputAcc')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="eInputAcc"
+                      placeholder="0"
+                      disabled
+                      style="height: 100px !important"
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      onclick="add('eInputAcc')"
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('mInputAcc')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="mInputAcc"
+                      placeholder="0"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="add('mInputAcc')"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="substract('hInputAcc')"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <input
+                      class="form-control inputStyle"
+                      id="hInputAcc"
+                      placeholder="0"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-4" style="padding: 0px">
+                    <button
+                      style="width: 100%; height: 100px; font-size: 60px"
+                      type="button"
+                      class="btn btn-primary buttonStyle"
+                      onclick="add('hInputAcc')"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="addButtonAcc" class="row">
+              <div class="col-12">
+                <button
+                  onclick="addTechCalc('acc')"
+                  style="
+                    width: 100%;
+                    height: 100px;
+                    font-size: 49px;
+                    margin-top: 10px;
+                  "
+                  class="btn btn-primary"
+                  type="button"
+                >
+                  ADD
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="row buttonSection hideSection">
+          <div class="row hideSection nextButtonMisc">
+            <div class="col-12 buttonStyle">
+              <button
+                onclick="goNextMisc()"
+                style="width: 400px; height: 200px; font-size: 60px"
+                class="btn btn-primary"
+                type="button"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- End Nail Accessoroies Content-->
+        <!--Miscellaneous-->
+        <div id="miscellaneous" class="row hideSection sectionStyle">
+          <div class="row">
+            <dic class="col-12">
+              <h3 class="titleStyle">Additional</h3>
+            </dic>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                  onchange="addRemoval()"
+                />
+                <label
+                  style="padding-left: 15px"
+                  class="form-check-label"
+                  for="flexCheckDefault"
+                >
+                  Material Removal
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                  onchange="addLateArrival()"
+                />
+                <label
+                  style="padding-left: 15px"
+                  class="form-check-label"
+                  for="flexCheckDefault"
+                >
+                  Late Arrival
+                </label>
+              </div>
+            </div>
+          </div>
+          <div id="inputSectionAdd" class="row">
+            <div class="row">
+              <dic class="col-12">
+                <h3 class="titleStyle">Deposit</h3>
+              </dic>
+            </div>
+            <div class="row">
+              <div class="col-10">
+                <input
+                  class="form-control inputStyle"
+                  id="otherInputAdd"
+                  placeholder="$0.00"
+                />
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn btn-primary buttonStyle"
+                  style="height: 118px; width: 100%; font-size: 50px"
+                  onclick="addDeposit('otherInputAdd')"
+                >
+                  GO
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row buttonSection">
             <div class="col-12 buttonStyle">
               <button
                 data-bs-toggle="modal"
@@ -1305,6 +2525,7 @@
             </div>
           </div>
         </div>
+        <!--End Miscellaneous-->
       </div>
       <!--End Main Content-->
       <div
@@ -1312,7 +2533,7 @@
         class="row"
         style="padding-left: 25%; padding-right: 20%; padding-top: 40px"
       >
-        <div class="col-3 navStyle">
+        <div class="col-2 navStyle">
           <button
             id="nailLengthBtn"
             class="btn btn-primary btnNav activeNav"
@@ -1321,7 +2542,7 @@
             ;
           ></button>
         </div>
-        <div class="col-3 navStyle">
+        <div class="col-2 navStyle">
           <button
             id="nailShapeBtn"
             class="btn btn-primary btnNav inactiveNav"
@@ -1329,7 +2550,7 @@
             onClick="btnNavigationClick(this)"
           ></button>
         </div>
-        <div class="col-3 navStyle">
+        <div class="col-2 navStyle">
           <button
             id="techniqueBtn"
             class="btn btn-primary btnNav inactiveNav"
@@ -1337,9 +2558,17 @@
             onClick="btnNavigationClick(this)"
           ></button>
         </div>
-        <div class="col-3 navStyle">
+        <div class="col-2 navStyle">
           <button
             id="accessoriesBtn"
+            class="btn btn-primary btnNav inactiveNav"
+            type="button"
+            onClick="btnNavigationClick(this)"
+          ></button>
+        </div>
+        <div class="col-2 navStyle">
+          <button
+            id="miscellaneousBtn"
             class="btn btn-primary btnNav inactiveNav"
             type="button"
             onClick="btnNavigationClick(this)"
@@ -1353,7 +2582,6 @@
         tabindex="-1"
         aria-labelledby="genModallLabel"
         aria-hidden="true"
-        style="margin-top: 200px"
       >
         <div class="modal-dialog">
           <div class="modal-content">
@@ -1382,7 +2610,7 @@
                 Close
               </button>
             </div>
-            <p style="text-align: center">CHERRY NAILS</p>
+            <p style="text-align: center; font-size: 40px">CHERRY NAILS</p>
           </div>
         </div>
       </div>
