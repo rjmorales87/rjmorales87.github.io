@@ -1691,8 +1691,9 @@
           dep.classList.remove("cardSelected");
           depBtn.classList.add("addDeposit");
           depBtn.classList.remove("removeDeposit");
-          depIcon.classList.add("addDepositIcon");
-          depIcon.classList.remove("removeDepositIcon");
+          depBtn.innerHTML = "<i id='depIcon'class='bi bi-check2-circle'></i>";
+          //depIcon.classList.add("addDepositIcon");
+          //depIcon.classList.remove("removeDepositIcon");
         } else {
           if (dep.value !== "") {
             selectCard(dep);
@@ -1701,8 +1702,9 @@
             calculatePrices();
             depBtn.classList.remove("addDeposit");
             depBtn.classList.add("removeDeposit");
-            depIcon.classList.remove("addDepositIcon");
-            depIcon.classList.add("removeDepositIcon");
+            depBtn.innerHTML = "Add Deposit";
+            //depIcon.classList.remove("addDepositIcon");
+            // depIcon.classList.add("removeDepositIcon");
           }
         }
       }
@@ -2603,11 +2605,6 @@
                   onclick="addDeposit('otherInputAdd')"
                 >
                   Add Deposit
-                  <i
-                    id="depIcon"
-                    style="opacity: 0"
-                    class="bi bi-check2-circle"
-                  ></i>
                 </button>
               </div>
             </div>
