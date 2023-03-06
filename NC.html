@@ -8,6 +8,10 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -214,6 +218,62 @@
           background-color: white;
           opacity: 1;
         }
+      }
+      @keyframes addDepositAnimation {
+        from {
+          background-color: #f1cbff;
+        }
+        to {
+          background-color: green;
+        }
+      }
+      @keyframes addDepositIconAnimation {
+        from {
+          opacity: 0;
+          margin-left: 0px;
+        }
+        to {
+          opacity: 1;
+          margin-left: 20px;
+        }
+      }
+      @keyframes removeDepositIconAnimation {
+        from {
+          opacity: 1;
+          margin-left: 20px;
+        }
+        to {
+          opacity: 0;
+          margin-left: 0px;
+        }
+      }
+      @keyframes removeDepositAnimation {
+        from {
+          background-color: green;
+        }
+        to {
+          background-color: #f1cbff;
+        }
+      }
+      .addDepositIcon {
+        animation-name: addDepositIconAnimation;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+      .removeDepositIcon {
+        animation-name: removeDepositIconAnimation;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+      .addDeposit {
+        animation-name: addDepositAnimation;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+      .removeDeposit {
+        animation-name: removeDepositAnimation;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
       }
       .moveOut {
         animation-name: moveRight;
@@ -569,10 +629,10 @@
         if (nailLength > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
           table += "<h2>Length</h2>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table += "<h2>$" + nailLength + ".00</h2>";
           table += "</div>";
           table += "</div>";
@@ -581,7 +641,7 @@
         if (nailShapePrice > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
           table +=
             "<div class='row'><div class='col-12'><h2>Shape</h2></div></div>";
           table +=
@@ -589,7 +649,7 @@
             nailShape.toUpperCase() +
             "</h2></li></ul></div></div>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table +=
             "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
           table +=
@@ -603,7 +663,7 @@
         if (tech.length > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
           table +=
             "<div class='row'><div class='col-12'><h2>Technique</h2></div></div>";
           table += "<div class='row'><div class='col-12'><ul>";
@@ -617,7 +677,7 @@
           }
           table += "</ul></div></div>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table +=
             "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
           table +=
@@ -632,7 +692,7 @@
         if (accPrice.length > 0 || nailAccPrice > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;padding:0px'>";
           table +=
             "<div class='row'><div class='col-12'><h2>Accessories</h2></div></div>";
           table += "<div class='row'><div class='col-12'><ul>";
@@ -649,7 +709,7 @@
           }
           table += "</ul></div></div>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table +=
             "<div class='row'><div class='col-12'><h2>&nbsp;</h2></div></div>";
           table +=
@@ -667,10 +727,10 @@
         if (materialRemoval > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
           table += "<h2>Material Removal</h2>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table += "<h2>$" + materialRemoval + ".00</h2>";
           table += "</div>";
           table += "</div>";
@@ -678,10 +738,10 @@
         if (lateArrival > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
           table += "<h2>Late Arrival</h2>";
           table += "</div>";
-          table += "<div class='col-2'>";
+          table += "<div class='col-3'>";
           table += "<h2>$" + lateArrival + ".00</h2>";
           table += "</div>";
           table += "</div>";
@@ -689,11 +749,11 @@
         if (deposit > 0) {
           table += "<div class='row'>";
           table +=
-            "<div class='col-10' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
+            "<div class='col-9' style='border-bottom:1px solid black;border-bottom-style:dotted;'>";
           table += "<h2>Deposit</h2>";
           table += "</div>";
-          table += "<div class='col-2'>";
-          table += "<h2>-$" + deposit + ".00</h2>";
+          table += "<div class='col-3'>";
+          table += "<h2 style='color: green;'>-$" + deposit + ".00</h2>";
           table += "</div>";
           table += "</div>";
         }
@@ -788,12 +848,18 @@
             div.classList.add("disabledCards");
             div.classList.remove("enabledCards");
           }
+          let showNav = document.getElementById("navSection");
+          showNav.classList.remove("showSection");
+          showNav.classList.add("hideSection");
         } else {
           for (x = 0; x < arr.length; x++) {
             let div = document.getElementById(arr[x]);
             div.classList.remove("disabledCards");
             div.classList.add("enabledCards");
           }
+          let showNav = document.getElementById("navSection");
+          showNav.classList.add("showSection");
+          showNav.classList.remove("hideSection");
         }
       }
       function disableAccCards(status) {
@@ -805,12 +871,18 @@
             div.classList.add("disabledCards");
             div.classList.remove("enabledCards");
           }
+          let showNav = document.getElementById("navSection");
+          showNav.classList.remove("showSection");
+          showNav.classList.add("hideSection");
         } else {
           for (x = 0; x < arr.length; x++) {
             let div = document.getElementById(arr[x]);
             div.classList.remove("disabledCards");
             div.classList.add("enabledCards");
           }
+          let showNav = document.getElementById("navSection");
+          showNav.classList.add("showSection");
+          showNav.classList.remove("hideSection");
         }
       }
       function getTechnique(t) {
@@ -1610,17 +1682,27 @@
       }
       function addDeposit(d) {
         let dep = document.getElementById(d);
+        let depBtn = document.getElementById("depositBtn");
+        let depIcon = document.getElementById("depIcon");
         let depVal = parseInt(dep.value);
         if (!isNaN(depVal)) {
           deposit = depVal;
           calculatePrices();
           dep.classList.remove("cardSelected");
+          depBtn.classList.add("addDeposit");
+          depBtn.classList.remove("removeDeposit");
+          depIcon.classList.add("addDepositIcon");
+          depIcon.classList.remove("removeDepositIcon");
         } else {
           if (dep.value !== "") {
             selectCard(dep);
           } else {
             deposit = 0;
             calculatePrices();
+            depBtn.classList.remove("addDeposit");
+            depBtn.classList.add("removeDeposit");
+            depIcon.classList.remove("addDepositIcon");
+            depIcon.classList.add("removeDepositIcon");
           }
         }
       }
@@ -1843,23 +1925,25 @@
               </dic>
             </div>
             <div class="row">
-              <div class="col-10">
+              <div class="col-12 input-group mb-3">
+                <span class="input-group-text inputStyle">$</span>
                 <input
                   class="form-control inputStyle"
                   id="otherInput"
-                  placeholder="$0.00"
+                  placeholder="0"
                 />
+                <span class="input-group-text inputStyle">.00</span>
               </div>
-              <div class="col-2">
-                <button
-                  type="button"
-                  class="btn btn-primary buttonStyle"
-                  style="height: 118px; width: 100%; font-size: 50px"
-                  onclick="addPriceShape()"
-                >
-                  GO
-                </button>
-              </div>
+            </div>
+            <div class="col-12" style="padding-left: 20%; padding-right: 20%">
+              <button
+                type="button"
+                class="btn btn-primary buttonStyle"
+                style="height: 118px; width: 100%; font-size: 50px"
+                onclick="addPriceShape()"
+              >
+                Add Price
+              </button>
             </div>
           </div>
         </div>
@@ -2239,22 +2323,29 @@
               </dic>
             </div>
             <div class="row">
-              <div class="col-10">
+              <div class="col-12 input-group mb-3">
+                <span class="input-group-text inputStyle">$</span>
                 <input
                   class="form-control inputStyle"
                   id="otherInputAcc"
-                  placeholder="$0.00"
+                  placeholder="0"
                 />
+                <span class="input-group-text inputStyle">.00</span>
               </div>
-              <div class="col-2">
-                <button
-                  type="button"
-                  class="btn btn-primary buttonStyle"
-                  style="height: 118px; width: 100%; font-size: 50px"
-                  onclick="addPriceAcc()"
+              <div class="row">
+                <div
+                  class="col-12"
+                  style="padding-left: 20%; padding-right: 20%"
                 >
-                  GO
-                </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary buttonStyle"
+                    style="height: 118px; width: 100%; font-size: 50px"
+                    onclick="addPriceAcc()"
+                  >
+                    Add Price
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -2492,27 +2583,37 @@
               </dic>
             </div>
             <div class="row">
-              <div class="col-10">
+              <div class="col-12 input-group mb-3">
+                <span class="input-group-text inputStyle">$</span>
                 <input
                   class="form-control inputStyle"
                   id="otherInputAdd"
-                  placeholder="$0.00"
+                  placeholder="0"
                 />
+                <span class="input-group-text inputStyle">.00</span>
               </div>
-              <div class="col-2">
+            </div>
+            <div class="row">
+              <div class="col-12" style="padding-left: 20%; padding-right: 20%">
                 <button
+                  id="depositBtn"
                   type="button"
                   class="btn btn-primary buttonStyle"
                   style="height: 118px; width: 100%; font-size: 50px"
                   onclick="addDeposit('otherInputAdd')"
                 >
-                  GO
+                  Add Deposit
+                  <i
+                    id="depIcon"
+                    style="opacity: 0"
+                    class="bi bi-check2-circle"
+                  ></i>
                 </button>
               </div>
             </div>
           </div>
           <div class="row buttonSection">
-            <div class="col-12 buttonStyle">
+            <div class="col-12 buttonStyle" style="padding-top: 10%">
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#genModal"
