@@ -1685,7 +1685,7 @@
         let depBtn = document.getElementById("depositBtn");
         let depIcon = document.getElementById("depIcon");
         let depVal = parseInt(dep.value);
-        if (!isNaN(depVal)) {
+        if (!isNaN(depVal) && depVal !== 0) {
           deposit = depVal;
           calculatePrices();
           dep.classList.remove("cardSelected");
@@ -1695,17 +1695,17 @@
           //depIcon.classList.add("addDepositIcon");
           //depIcon.classList.remove("removeDepositIcon");
         } else {
-          if (dep.value !== "") {
-            selectCard(dep);
-          } else {
-            deposit = 0;
-            calculatePrices();
-            depBtn.classList.remove("addDeposit");
-            depBtn.classList.add("removeDeposit");
-            depBtn.innerHTML = "Add Deposit";
-            //depIcon.classList.remove("addDepositIcon");
-            // depIcon.classList.add("removeDepositIcon");
-          }
+          // if (dep.value !== "") {
+          //   selectCard(dep);
+          // } else {
+          deposit = 0;
+          calculatePrices();
+          depBtn.classList.remove("addDeposit");
+          depBtn.classList.add("removeDeposit");
+          depBtn.innerHTML = "Add Deposit";
+          //depIcon.classList.remove("addDepositIcon");
+          // depIcon.classList.add("removeDepositIcon");
+          //}
         }
       }
     </script>
